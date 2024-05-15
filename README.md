@@ -15,3 +15,16 @@ the text classification model should store in the separate folder 'text_classifi
 
 <!-- QA model -->
 question answering model should store in a separate folder 'QA_Model'
+
+Instructions to Run FE
+
+1. Clone/Download the repo
+2. Navigate to /TDP_ChatBot/Razor_FE
+3. Open the CommandLine/Terminal and run the following:
+   1. npm install
+   2. npm start
+  
+The web page should be displayed in your default web browser. 
+<img width="1440" alt="image" src="https://github.com/MattNandavong/TDP_ChatBot/assets/48211220/15c0a6cc-0236-4935-9371-875c82ffd472">
+
+Note: the changes are not yet merged to the main branch. Working branch: VisalDev
