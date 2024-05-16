@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify, send_from_directory
 import os
 from transformers import RobertaTokenizer, RobertaForQuestionAnswering
 import torch
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Initialize message history as an empty list
 message_history = []
