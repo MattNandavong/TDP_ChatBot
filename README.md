@@ -27,4 +27,4 @@ Instructions to Run FE
 The web page should be displayed in your default web browser. 
 <img width="1440" alt="image" src="https://github.com/MattNandavong/TDP_ChatBot/assets/48211220/15c0a6cc-0236-4935-9371-875c82ffd472">
 
-Note: the changes are not yet merged to the main branch. Working branch: VisalDev
+Note: The updated branch is Main
