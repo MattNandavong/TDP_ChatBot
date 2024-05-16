@@ -39,7 +39,7 @@
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
         {'Copyright © '}
         <Link color="inherit" href="https://mui.com/">
-          BrightBoost Log
+          Razor Chat Bot
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -95,47 +95,36 @@
   setChats(prevChats => [...prevChats, newChat]);
        
       event.preventDefault();
-      const loginBody = JSON.stringify({
-        // StudentEmail: studentEmail,
-        // StudentPassword: studentPassword,
+      const queryBody = JSON.stringify({
+        query: newQuestion,
       });
 
 
-    // console.log("stydent")
-    // axios({
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=UTF-8',
-    //   },
-    //   method: 'POST',
-    //   url: 'http://localhost:3200/api/users/studentLogin',
-    //   data: loginBody,
-    // })
-    //   .then((response) => {
-    //     console.log('Arrived to login request');
-    //     if (response.status === 200) {
-    //       setResData(response.data);
-    //       console.log('this is resData status ' + resData.messageCode);
-    //       if (resData.messageCode === '1000') {
-    //         setLoggedin(true);
-    //         window.sessionStorage.setItem("IsLoggedIn", true);
-    //         window.sessionStorage.setItem("user", true);
-    //         navigate('/StudentProfile', { state: { userData: resData } });
-    //         //  navigate('/Dashboard')
-    //         Swal.fire({
-    //           position: 'middle',
-    //           icon: 'success',
-    //           title: 'User Login Successful !',
-    //           showConfirmButton: false,
-    //           timer: 3500,
-    //         });
-    //       }
-    //       console.log('this is login status 2 ' + loggedin);
-    //     }
-    //   })
-    //   .then(console.log(
-    //     "success!"
-    //   ))
-    //   .catch(() => console.log('ISSUES !'));
+    axios({
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      method: 'POST',
+      url: 'http://127.0.0.1:5000/query',
+      data: queryBody,
+    })
+      .then((response) => {
+        console.log('Arrived to request');
+        if (response.status === 200) {
+
+
+          const newChat2 = {
+            primary: "Razor",
+            secondary: response.data.answer,
+            avatarSrc: "https://media2.giphy.com/media/6a0mBtXHlkE3uFh2Sb/giphy_s.gif?cid=6c09b952tltg0delr0ghw23drc61n5d8jt4xsebjd2wk7n4g&ep=v1_internal_gif_by_id&rid=giphy_s.gif&ct=s"
+          };
+          setChats(prevChats => [...prevChats, newChat2]);
+        }
+      })
+      .then(console.log(
+        "success!"
+      ))
+      .catch(() => console.log('ISSUES !'));
  };
 
     return (
