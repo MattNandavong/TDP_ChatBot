@@ -7,9 +7,6 @@ The main integration file is main.py.
 <!-- test.py -->
 Test.py should be a file for testing and practicing the integration
 
-<!-- html -->
-all UI file should be stored in a separate folder 'html'.
-
 <!-- text classification model  -->
 the text classification model should store in the separate folder 'text_classification'
 
