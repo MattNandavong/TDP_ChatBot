@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
-import Home from "./containers/login/Home.js"
+import Home from "./containers/Chat/Home.js"
 import toast, { Toaster } from 'react-hot-toast';
 function App({props}) {
   
