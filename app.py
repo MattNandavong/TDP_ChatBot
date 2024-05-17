@@ -20,7 +20,7 @@ def index():
 def process_query():
     global message_history  # Use global variable to store message history
     # load QA model API
-    get_answer = pipeline(task="question-answering", model="MattNandavong/QA-roberta-model3")
+    get_answer = pipeline(task="question-answering", model="MattNandavong/bert_large_uncased-QA1")
     #context list 
     contextList = [
         # ERN-Enrol and applying
