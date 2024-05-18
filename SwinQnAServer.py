@@ -1,7 +1,11 @@
-from FlagEmbedding import FlagReranker
-from flask import Flask, request, jsonify
-from sentence_transformers import SentenceTransformer, util
 import pandas as pd
+from sentence_transformers import SentenceTransformer, util
+from flask import Flask, request, jsonify
+from FlagEmbedding import FlagReranker
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning,
+                        module="huggingface_hub.file_download")
+
 
 app = Flask(__name__)
 
