@@ -1,13 +1,16 @@
-import pandas as pd
-from sentence_transformers import SentenceTransformer, util
-from flask import Flask, request, jsonify
 from FlagEmbedding import FlagReranker
+from flask import Flask, request, jsonify
+from sentence_transformers import SentenceTransformer, util
+import pandas as pd
+from flask_cors import CORS
+
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning,
                         module="huggingface_hub.file_download")
 
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Import Swinburn Frequently asked quetions from a csv file
 df = pd.read_csv('SwinFAQDataSet.csv')

@@ -115,10 +115,11 @@ const Home = () => {
         'Content-Type': 'application/json;charset=UTF-8',
       },
       method: 'POST',
-      url: 'http://127.0.0.1:5000/query',
+      url: 'http://127.0.0.1:5000/ask',
       data: queryBody,
     })
       .then((response) => {
+        console.log("response is",response)
         if (response.status === 200) {
           const newChat2 = {
             primary: 'Razor',
@@ -201,7 +202,8 @@ const Home = () => {
             }}
           >
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <Paper style={{ maxHeight: 450, overflow: 'auto' }}>
+            
+              {/*<Paper style={{ maxHeight: 450, overflow: 'auto' }}>
                 <List
                   sx={{
                     width: '100%',
@@ -213,7 +215,6 @@ const Home = () => {
                     '& ul': { padding: 0 },
                   }}
                 >
-                  {/* Map over items array to render ListItems */}
                   {chats.map((item, index) => (
                     <React.Fragment key={index}>
                       <ListItem alignItems="flex-start">
@@ -234,7 +235,8 @@ const Home = () => {
                     </React.Fragment>
                   ))}
                 </List>
-              </Paper>
+              </Paper>*/}
+
               <TextField
                 margin="normal"
                 required
