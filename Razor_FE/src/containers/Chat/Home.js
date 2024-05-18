@@ -106,8 +106,7 @@ const Home = () => {
     setChats((prevChats) => [...prevChats, newChat]);
 
     const queryBody = JSON.stringify({
-      query: newQuestion,
-      topic: selectedTopic
+      question:newQuestion
     });
 
     axios({
@@ -203,7 +202,7 @@ const Home = () => {
           >
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             
-              {/*<Paper style={{ maxHeight: 450, overflow: 'auto' }}>
+              <Paper style={{ maxHeight: 450, overflow: 'auto' }}>
                 <List
                   sx={{
                     width: '100%',
@@ -235,7 +234,7 @@ const Home = () => {
                     </React.Fragment>
                   ))}
                 </List>
-              </Paper>*/}
+              </Paper>
 
               <TextField
                 margin="normal"
