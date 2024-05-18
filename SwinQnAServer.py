@@ -31,3 +31,14 @@ def find_best_answer(user_question):
         return p_answer[0]
     else:
         return "Sorry, This Quetion is no in my scope"
+
+
+@app.route('/ask', methods=['POST'])
+def ask_question():
+    data = request.json
+    if not data or 'question' not in data:
+        return jsonify({'error': 'Invalid input'}), 400
+
+    user_question = data['question']
+    answer = find_best_answer(user_question)
+    return jsonify({'answer': answer})
