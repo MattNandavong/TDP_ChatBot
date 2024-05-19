@@ -11,3 +11,4 @@ coverage/*
 .pnp/*
 yarn-error.log
 debug.log
+/node_modules
