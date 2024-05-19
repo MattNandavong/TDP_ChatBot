@@ -8,36 +8,37 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning,
                         module="huggingface_hub.file_download")
 
-
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Import Swinburn Frequently asked quetions from a csv file
-df = pd.read_csv('SwinFAQDataSet.csv')
-questions = df['Question'].tolist()
-answers = df['Answer'].tolist()
+# Import Swinburne Frequently asked questions from a CSV file
+faq_df = pd.read_csv('SwinFAQDataSet.csv')
+faq_questions = faq_df['Question'].tolist()
+faq_answers = faq_df['Answer'].tolist()
 
-model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
-embeddings = model.encode(questions)
+question_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+question_embeddings = question_model.encode(faq_questions)
 
 # Load the re-ranker
-reranker = FlagReranker('BAAI/bge-reranker-v2-m3', use_fp16=True)
+question_reranker = FlagReranker('BAAI/bge-reranker-v2-m3', use_fp16=True)
 
 
-def find_best_answer(user_question):
-    q_embedding = model.encode(user_question)
-    cos_sim = util.cos_sim(q_embedding, embeddings)
-    val = [cos_sim[0][i].item() for i in range(len(cos_sim[0]))]
+def get_best_answer(user_question):
+    user_question_embedding = question_model.encode(user_question)
+    cosine_similarities = util.cos_sim(
+        user_question_embedding, question_embeddings)
+    similarity_scores = [cosine_similarities[0][i].item()
+                         for i in range(len(cosine_similarities[0]))]
 
-    sorted_indices = sorted(
-        range(len(val)), key=lambda i: val[i], reverse=True)
-    p_answer = [answers[i] for i in sorted_indices]
-    p_question = [questions[i] for i in sorted_indices]
+    sorted_indices = sorted(range(len(similarity_scores)),
+                            key=lambda i: similarity_scores[i], reverse=True)
+    possible_answers = [faq_answers[i] for i in sorted_indices]
+    possible_questions = [faq_questions[i] for i in sorted_indices]
 
-    if reranker.compute_score([p_question[0], user_question]) > 0:
-        return p_answer[0]
+    if question_reranker.compute_score([possible_questions[0], user_question]) > 0:
+        return possible_answers[0]
     else:
-        return "Sorry, This Quetion is no in my scope"
+        return "Sorry, This Question is not in my scope"
 
 
 @app.route('/ask', methods=['POST'])
@@ -47,7 +48,7 @@ def ask_question():
         return jsonify({'error': 'Invalid input'}), 400
 
     user_question = data['question']
-    answer = find_best_answer(user_question)
+    answer = get_best_answer(user_question)
     return jsonify({'answer': answer})
 
 
