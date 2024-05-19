@@ -73,7 +73,7 @@ const Home = () => {
   const [chats, setChats] = useState([
     {
       primary: 'Razor',
-      secondary: "Hello! I am Razor, Swinburne University's virtual assistant. I can assist you with your queries with regard to our university and courses. You may select from the following options or type your specific requirement.",
+      secondary: "Hello! I am Razor, Swinburne University's virtual assistant. I can assist you with your queries with regard to our university and courses.",
       avatarSrc:
         'https://media2.giphy.com/media/6a0mBtXHlkE3uFh2Sb/giphy_s.gif?cid=6c09b952tltg0delr0ghw23drc61n5d8jt4xsebjd2wk7n4g&ep=v1_internal_gif_by_id&rid=giphy_s.gif&ct=s',
       time: getCurrentTime(),
@@ -106,7 +106,8 @@ const Home = () => {
     setChats((prevChats) => [...prevChats, newChat]);
 
     const queryBody = JSON.stringify({
-      question:newQuestion
+      question: newQuestion,
+      // topic: selectedTopic
     });
 
     axios({
@@ -118,7 +119,6 @@ const Home = () => {
       data: queryBody,
     })
       .then((response) => {
-        console.log("response is",response)
         if (response.status === 200) {
           const newChat2 = {
             primary: 'Razor',
@@ -145,7 +145,7 @@ const Home = () => {
   const setMsg = () => {
     const newChat2 = {
       primary: 'Razor',
-      secondary: 'I have no information over that',
+      secondary: 'Sorry! There is a technical difficulty, I am unable to answer your question.',
       avatarSrc:
         'https://media2.giphy.com/media/6a0mBtXHlkE3uFh2Sb/giphy_s.gif?cid=6c09b952tltg0delr0ghw23drc61n5d8jt4xsebjd2wk7n4g&ep=v1_internal_gif_by_id&rid=giphy_s.gif&ct=s',
       time: getCurrentTime(),
@@ -201,7 +201,6 @@ const Home = () => {
             }}
           >
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            
               <Paper style={{ maxHeight: 450, overflow: 'auto' }}>
                 <List
                   sx={{
@@ -214,6 +213,7 @@ const Home = () => {
                     '& ul': { padding: 0 },
                   }}
                 >
+                  {/* Map over items array to render ListItems */}
                   {chats.map((item, index) => (
                     <React.Fragment key={index}>
                       <ListItem alignItems="flex-start">
@@ -225,17 +225,12 @@ const Home = () => {
                           secondary={item.secondary + '  ' + item.time}
                         />
                       </ListItem>
-                      {index === 0 && buttonsVisible && (
-                        <ListItem sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> 
-                          <Buttons onClick={handleButtonClick} />
-                        </ListItem>
-                      )}
+                
                       {index !== chats.length - 1 && <Divider variant="inset" component="li" />}
                     </React.Fragment>
                   ))}
                 </List>
               </Paper>
-
               <TextField
                 margin="normal"
                 required
